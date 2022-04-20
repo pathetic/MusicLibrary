@@ -1,5 +1,4 @@
 #include "song.h"
-#include "utils.h"
 #include <sstream>
 #include <iomanip>
 #include <iostream>
@@ -64,8 +63,6 @@ Song::Song()
     std::cout << "Introdu anul lansarii melodiei\n";
     std::cin >> this->Year;
     std::cin.get();
-
-    clear();
 }
 
 Song::Song(std::string& ISMN, std::string& title, std::vector<std::string>& artists, std::vector<std::string>& genres, std::string& album, int streams, int rating, int duration, int year)
@@ -87,8 +84,8 @@ Song::~Song() {
 std::string Song::toString() const
 {
 	std::ostringstream str;
-	str << "Song: " << Title << " (ISMN: " << ISMN << ")" ":\n";
-
+	str << "Song: " << Title << "\n";
+    str << "ISMN: " << ISMN << "\n";
 	str << "Artists: ";
     for (auto& aritstul : Artist) {
         str << aritstul << ", ";
