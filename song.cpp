@@ -1,4 +1,5 @@
 #include "song.h"
+#include "utils.h"
 #include <sstream>
 #include <iomanip>
 #include <iostream>
@@ -63,6 +64,8 @@ Song::Song()
     std::cout << "Introdu anul lansarii melodiei\n";
     std::cin >> this->Year;
     std::cin.get();
+
+    clear();
 }
 
 Song::Song(std::string& ISMN, std::string& title, std::vector<std::string>& artists, std::vector<std::string>& genres, std::string& album, int streams, int rating, int duration, int year)
@@ -109,4 +112,36 @@ std::ostream& operator<<(std::ostream& out, const Song& song)
 {
 	out << song.toString();
 	return out;
+}
+
+nlohmann::json Song::getJson() const {
+    nlohmann::json json;
+    json["ISMN"] = ISMN;
+    json["Title"] = Title;
+    json["Album"] = Album;
+    json["Streams"] = Streams;
+    json["Rating"] = Rating;
+    json["Duration"] = Duration;
+    json["Year"] = Year;
+    json["Artist"] = Artist;
+    json["Genre"] = Genre;
+    return json;
+};
+
+Song::Song(nlohmann::json& json)
+{
+    ISMN = json["ISMN"];
+    Title = json["Title"];
+    Album = json["Album"];
+    Streams = json["Streams"];
+    Rating = json["Rating"];
+    Duration = json["Duration"];
+    Year = json["Year"];
+
+    for (auto& it : json["Artist"]) {
+        Artist.push_back(it.get<std::string>());
+    }
+    for (auto& it : json["Genre"]) {
+        Genre.push_back(it.get<std::string>());
+    }
 }

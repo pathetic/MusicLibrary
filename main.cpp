@@ -1,9 +1,11 @@
 #include "song.h"
+#include "utils.h"
 #include <iostream>
 
 int main()
 {
-    Song mata;
-    std::cout << mata << "\n";
+    clear();
+    Song songul;
+    std::cout << songul << "\n";
     return 0;
 }

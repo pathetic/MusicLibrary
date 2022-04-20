@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include "json.hpp"
 
 #define MAX_LEN 100
 
@@ -17,9 +18,11 @@ public:
 
     Song();
     Song(std::string& ISMN, std::string& title, std::vector<std::string>& artists, std::vector<std::string>& genres, std::string& album, int streams, int rating, int duration, int year);
+    Song(nlohmann::json& json);
     ~Song();
 
     std::string toString() const;
+    nlohmann::json getJson() const;
 
     friend std::ostream& operator<<(std::ostream& out, const Song& offer);
 private:
