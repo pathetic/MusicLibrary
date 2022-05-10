@@ -25,6 +25,8 @@ menu::command menu::ParseCommand(const char *cmd) {
         return search;
     if (strcmp(cmd,"update")==0)
         return update;
+    if (strcmp(cmd,"listen")==0)
+        return listen;
     if (strcmp(cmd,"save")==0)
         return save;
     if (strcmp(cmd,"quit")==0)
@@ -56,6 +58,7 @@ void menu::DisplayHelpMessage() {
 void menu::AfisareDeleteOptiuni() {
     int optiune;
     do {
+        ClearScreen();
         std::cout << "0. Back\n" <<
         "1. Delete dupa index\n" <<
         "2. Delete dupa ISMN\n" <<
@@ -72,6 +75,7 @@ void menu::AfisareDeleteOptiuni() {
         case 1:
         {
             int index;
+            std::cout << "Introdu indexul melodiei";
             std::cin >> index;
             std::cin.ignore();
             ret = playlist.DeleteSongByIndex(index);
@@ -80,6 +84,7 @@ void menu::AfisareDeleteOptiuni() {
         case 2:
         {
             std::string ismn;
+            std::cout << "Introdu ISMN-ul melodiei";
             std::cin >> ismn;
             ret = playlist.DeleteSongByIsmn(ismn);
         }
@@ -104,6 +109,7 @@ void menu::AfisareDeleteOptiuni() {
 void menu::AfisareSearchOptiuni() {
     int optiune;
     do {
+        ClearScreen();
         std::cout << "0. Back\n" <<
                   "1. Search dupa index\n" <<
                   "2. Search dupa ISMN\n" <<
@@ -180,6 +186,7 @@ void menu::AfisareSearchOptiuni() {
 void menu::AfisareListenOptiuni() {
     int optiune;
     do {
+        ClearScreen();
         std::cout << "0. Back\n" <<
                   "1. Asculta dupa ISMN\n";
         std::cin >> optiune;
@@ -203,12 +210,14 @@ void menu::AfisareListenOptiuni() {
 void menu::AfisareUpdateOptiuni() {
     int optiune;
     do {
+        ClearScreen();
         std::cout << "0. Back\n" <<
-                  "1. Actualizeaza dupa ISMN\n";
+                  "1. Actualizeaza dupa ISMN\n" <<
+                  "2. Actualizeaza dupa index\n";
         std::cin >> optiune;
         ClearScreen();
         std::cin.ignore();
-    } while(optiune < 0 || optiune > 1);
+    } while(optiune < 0 || optiune > 2);
 
     switch (optiune) {
         case 0:
@@ -222,6 +231,15 @@ void menu::AfisareUpdateOptiuni() {
             playlist.UpdateSongByIsmn(ismn)? std::cout << "Melodia nu a fost gasita\n"
             : std :: cout << "Ai actualizat melodia cu success\n";
         }
+        case 2:
+        {
+            std::cout << "Introdu indexul melodiei pe care vrei sa o actualizezi\n";
+            int imp;
+            std::cin >> imp;
+            std::cin.ignore();
+            playlist.UpdateSongByIndex(imp)? std::cout << "Melodia nu a fost gasita\n"
+            : std :: cout << "Ai actualizat melodia cu success\n";
+        }
     }
 }
 
@@ -231,6 +249,7 @@ void menu::StartLoop() {
         auto cmd = GetUserCommand();
         switch (cmd) {
             case list:
+                ClearScreen();
                 std::cout << playlist;
                 break;
             case clear:
@@ -250,6 +269,7 @@ void menu::StartLoop() {
                 break;
             case load:
                 playlist.ReadSongs();
+                break;
             case quit:
                 return;
             case del:

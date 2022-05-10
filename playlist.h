@@ -4,6 +4,7 @@
 #include "song.h"
 #include <list>
 
+//mergem pe un sistem similar cu cel din go, in care vom folosi un bool pentru a returna 1 cand avem o eroare
 class Playlist {
 public:
     Playlist();
