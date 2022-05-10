@@ -29,6 +29,14 @@ public:
     std::string toString() const;
     nlohmann::json getJson() const;
 
+    void setISMN(std::string ISMN);
+    void setTitle(std::string title);
+    void setAlbum(std::string album);
+    void setStreams(int streams);
+    void setRating(int rating);
+    void setDuration(int duration);
+    void setYear(int year);
+
     friend std::ostream& operator<<(std::ostream& out, const Song& offer);
 private:
 };

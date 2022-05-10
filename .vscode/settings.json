@@ -64,6 +64,10 @@
         "variant": "cpp",
         "codecvt": "cpp",
         "forward_list": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "set": "cpp",
+        "unordered_set": "cpp",
+        "optional": "cpp",
+        "source_location": "cpp"
     }
 }

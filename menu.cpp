@@ -23,6 +23,8 @@ menu::command menu::ParseCommand(const char *cmd) {
         return list;
     if (strcmp(cmd,"search")==0)
         return search;
+    if (strcmp(cmd,"update")==0)
+        return update;
     if (strcmp(cmd,"save")==0)
         return save;
     if (strcmp(cmd,"quit")==0)
@@ -48,7 +50,7 @@ menu::command menu::GetUserCommand() {
 void menu::DisplayHelpMessage() {
     std::cout << "Scrie o comanda pentru a interactiona cu programul\n" <<
     "Comenziile prezente momentan sunt:\n" <<
-    "add, delete, list, search, listen, load, save, quit, help\n";
+    "add, delete, list, search, update, listen, load, save, quit, help\n";
 }
 
 void menu::AfisareDeleteOptiuni() {
@@ -198,6 +200,32 @@ void menu::AfisareListenOptiuni() {
     }
 }
 
+void menu::AfisareUpdateOptiuni() {
+    int optiune;
+    do {
+        std::cout << "0. Back\n" <<
+                  "1. Actualizeaza dupa ISMN\n";
+        std::cin >> optiune;
+        ClearScreen();
+        std::cin.ignore();
+    } while(optiune < 0 || optiune > 1);
+
+    switch (optiune) {
+        case 0:
+            return;
+        case 1:
+        {
+            std::cout << "Introdu ISMN-ul melodiei pe care vrei sa o actualizezi\n";
+            std::string ismn;
+            std::cin >> ismn;
+            std::cin.ignore();
+            playlist.UpdateSongByIsmn(ismn)? std::cout << "Melodia nu a fost gasita\n"
+            : std :: cout << "Ai actualizat melodia cu success\n";
+        }
+    }
+}
+
+
 void menu::StartLoop() {
     while (true) {
         auto cmd = GetUserCommand();
@@ -213,6 +241,9 @@ void menu::StartLoop() {
                 break;
             case add:
                 playlist.append();
+                break;
+            case update:
+                AfisareUpdateOptiuni();
                 break;
             case save:
                 playlist.SaveSongs();

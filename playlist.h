@@ -27,8 +27,8 @@ public:
 
     void DisplaySongByCriteriu(const std::function <bool (Song&)>& criteriu);
 
-    void UpdateSongByIsmn(std::string& ismn);
-    void UpdateSongByIndex(size_t index);
+    bool UpdateSongByIsmn(std::string& ismn);
+    bool UpdateSongByIndex(size_t index);
 
     std::string toString() const;
 

@@ -146,3 +146,31 @@ Song::Song(nlohmann::json& json)
         Genre.push_back(it.get<std::string>());
     }
 }
+
+void Song::setISMN(std::string ISMN) {
+    this->ISMN = ISMN;
+}
+
+void Song::setTitle(std::string title) {
+    this->Title = title;
+}
+
+void Song::setAlbum(std::string album) {
+    this->Album = album;
+}
+
+void Song::setStreams(int streams) {
+    this->Streams = streams;
+}
+
+void Song::setRating(int rating) {
+    this->Rating = rating;
+}
+
+void Song::setDuration(int duration) {
+    this->Duration = duration;
+}
+
+void Song::setYear(int year) {
+    this->Year = year;
+}

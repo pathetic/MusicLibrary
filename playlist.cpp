@@ -63,9 +63,9 @@ bool Playlist::ListenToSongByIsmn(std::string& ismn){
         if (song.ISMN == ismn)
         {
             song.listen();
-            return true;
+            return false;
         }
-    return false;
+    return true;
 }
 
 bool Playlist::DeleteSongByIsmn(std::string &ismn) {
@@ -112,6 +112,88 @@ void Playlist::DisplaySongByCriteriu(const std::function <bool (Song&)>& criteri
         }
         index++;
     }
+}
+
+bool Playlist::UpdateSongByIsmn(std::string &ismn) {
+    for (auto& song : songs)
+    {
+        if (song.ISMN == ismn)
+        {
+            char inp[MAX_LEN];
+            
+            std::cout << "Introdu ISMN-ul melodiei:\n";
+            std::cin.getline(inp,MAX_LEN);
+            song.setISMN(inp);
+            
+            
+            std::cout << "Introdu titlul melodiei:\n";
+            std::cin.getline(inp,MAX_LEN);
+            song.setTitle(inp);
+            
+            
+            std::cout << "Introdu albumul din care face parte melodia:\n";
+            std::cin.getline(inp,MAX_LEN);
+            song.setAlbum(inp);
+            
+
+            int artistsNr,genresNr;
+
+            song.Artist.clear();
+
+            std::cout << "Introdu numarul de artisti\n";
+            std::cin >> artistsNr;
+            std::cin.get();
+            song.Artist.reserve(artistsNr); // alocam numarul de autori
+            artistsNr++;
+
+            for (int i = 1; i < artistsNr; i++) {
+                std::cout << "Introdu artistul cu numarul " << i << "\n";
+                std::cin.getline(inp,MAX_LEN);
+                song.Artist.emplace_back(inp);
+            }
+
+            song.Genre.clear();
+
+            std::cout << "Introdu numarul de genuri\n";
+            std::cin >> genresNr;
+            std::cin.get();
+            song.Genre.reserve(genresNr); // alocam numarul de genuri
+            genresNr++;
+
+            for (int i = 1; i < genresNr; i++) {
+                std::cout << "Introdu genul cu numarul " << i << "\n";
+                std::cin.getline(inp,MAX_LEN);
+                song.Genre.emplace_back(inp);
+
+            }
+
+            int i1,i2,i3,i4;
+
+            std::cout << "Introdu numarul de streamuri\n";
+            std::cin >> i1;
+            song.setStreams(i1);
+            std::cin.get();
+
+            std::cout << "Introdu rating-ul melodiei (1-5)\n";
+            std::cin >> i2;
+            song.setRating(i2);
+            std::cin.get();
+
+            std::cout << "Introdu durata melodiei (in secunde)\n";
+            std::cin >> i3;
+            song.setDuration(i3);
+            std::cin.get();
+
+            std::cout << "Introdu anul lansarii melodiei\n";
+            std::cin >> i4;
+            song.setYear(i4);
+            std::cin.get();
+
+            return false;
+        }        
+    }
+
+    return true;
 }
 
 void Playlist::ReadSongs(std::istream& stream) {
