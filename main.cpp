@@ -1,27 +1,17 @@
-#include "playlist.h"
 #include <iostream>
- 
-#ifdef _WIN32 || _WIN64
-	#define clear() system("cls");
-	#define pause() system("pause");
-#else
-	#define clear() system("clear");
-	#define pause() system("read -p \"Press enter to continue...\"");
-#endif
+#include "fstream"
+#include "song.h"
+#include "playlist.h"
+#include "json.hpp"
+#include "menu.h"
 
-int main()
-{
-    clear();
-    Song songul;
-    std::cout << songul << "\n";
+#define NUME_DB "db.json"
 
-    std::string titlul = "playlist.txt";
+int main() {
+    menu::GetInstance().playlist.nume = NUME_DB;
+    menu::GetInstance().playlist.ReadSongs();
+    menu::GetInstance().DisplayHelpMessage();
+    menu::GetInstance().StartLoop();
 
-    Playlist p(titlul);
-    
-    p.append(songul);
-    p.append(songul);
-
-    std::cout << p;
     return 0;
 }

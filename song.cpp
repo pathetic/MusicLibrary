@@ -81,6 +81,10 @@ Song::~Song() {
 
 }
 
+void Song::listen() {
+    Streams++;
+}
+
 std::string Song::toString() const
 {
 	std::ostringstream str;

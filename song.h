@@ -1,3 +1,6 @@
+#ifndef MUSIC_LIBRARY_SONG_H
+#define MUSIC_LIBRARY_SONG_H
+
 #include <vector>
 #include <string>
 #include "json.hpp"
@@ -21,9 +24,13 @@ public:
     Song(nlohmann::json& json);
     ~Song();
 
+    void listen();
+
     std::string toString() const;
     nlohmann::json getJson() const;
 
     friend std::ostream& operator<<(std::ostream& out, const Song& offer);
 private:
 };
+
+#endif
