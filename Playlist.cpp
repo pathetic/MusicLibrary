@@ -26,6 +26,16 @@ std::ostream& operator<<(std::ostream& out, const Playlist& playlist)
 	return out;
 }
 
+bool operator== (Playlist &lp,Playlist &rp)
+{
+    if (lp.songs.size() != rp.songs.size()) return false;
+    for (auto& s : lp.songs) {
+        auto ismn = s.getISMN();
+        if (rp.FindSongByIsmn(ismn) == nullptr) return false;
+    }
+    return true;
+}
+
 void Playlist::append(Song &song) {
     Song s = Song(song);
     songs.emplace_back(song);

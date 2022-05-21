@@ -174,3 +174,39 @@ void Song::setDuration(int duration) {
 void Song::setYear(int year) {
     this->Year = year;
 }
+
+std::string Song::getISMN() const {
+    return ISMN;
+}
+
+std::string Song::getTitle() const {
+    return Title;
+}
+
+std::vector<std::string> Song::getArtist() const {
+    return Artist;
+}
+
+std::vector<std::string> Song::getGenre() const {
+    return Genre;
+}
+
+std::string Song::getAlbum() const {
+    return Album;
+}
+
+int Song::getStreams() const {
+    return Streams;
+}
+
+int Song::getRating() const {
+    return Rating;
+}
+
+int Song::getDuration() const {
+    return Duration;
+}
+
+int Song::getYear() const {
+    return Year;
+}

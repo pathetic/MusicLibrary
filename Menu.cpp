@@ -17,7 +17,7 @@ menu::command menu::ParseCommand(std::string cmd) {
 menu::command menu::ParseCommand(const char *cmd) {
     if (strcmp(cmd,"add")==0)
         return add;
-    if (strcmp(cmd,"delete")==0)
+    if (strcmp(cmd,"del")==0)
         return del;
     if (strcmp(cmd,"list")==0)
         return list;
@@ -27,6 +27,10 @@ menu::command menu::ParseCommand(const char *cmd) {
         return update;
     if (strcmp(cmd,"listen")==0)
         return listen;
+    if (strcmp(cmd,"undo")==0)
+        return undo;
+    if (strcmp(cmd,"redo")==0)
+        return redo;
     if (strcmp(cmd,"save")==0)
         return save;
     if (strcmp(cmd,"quit")==0)
@@ -52,7 +56,7 @@ menu::command menu::GetUserCommand() {
 void menu::DisplayHelpMessage() {
     std::cout << "Scrie o comanda pentru a interactiona cu programul\n" <<
     "Comenziile prezente momentan sunt:\n" <<
-    "add, delete, list, search, update, listen, load, save, quit, help\n";
+    "add, del, list, search, update, listen, undo, redo, load, save, quit, help\n";
 }
 
 void menu::AfisareDeleteOptiuni() {
@@ -78,6 +82,7 @@ void menu::AfisareDeleteOptiuni() {
             std::cout << "Introdu indexul melodiei";
             std::cin >> index;
             std::cin.ignore();
+            actions.add_state(playlist);
             ret = playlist.DeleteSongByIndex(index);
         }
             break;
@@ -86,6 +91,7 @@ void menu::AfisareDeleteOptiuni() {
             std::string ismn;
             std::cout << "Introdu ISMN-ul melodiei";
             std::cin >> ismn;
+            actions.add_state(playlist);
             ret = playlist.DeleteSongByIsmn(ismn);
         }
             break;
@@ -94,6 +100,7 @@ void menu::AfisareDeleteOptiuni() {
             char inp[MAX_STR_LEN];
             std::cin.getline(inp,MAX_STR_LEN);
             std::string tmp = inp;
+            actions.add_state(playlist);
             ret = playlist.DeleteSongByCriteriu([&tmp](Song& song){
                 for (auto& artist: song.Artist)
                     if (artist == tmp) return true;
@@ -101,8 +108,10 @@ void menu::AfisareDeleteOptiuni() {
             });
         }
     }
-
-    ret ? std::cout << "Nu au fost gasite melodii care sa satisfaca conditia\n" : std::cout<<"Melodii sterse cu succes\n";
+    if(!ret)
+        std::cout << "Melodia a fost stearsa\n";
+    else
+        actions.remove_last_state(), std::cout << "Melodia nu a fost gasita\n";
     //TODO: delete dupa ce a selectat userul
 }
 
@@ -228,8 +237,11 @@ void menu::AfisareUpdateOptiuni() {
             std::string ismn;
             std::cin >> ismn;
             std::cin.ignore();
-            playlist.UpdateSongByIsmn(ismn)? std::cout << "Melodia nu a fost gasita\n"
-            : std :: cout << "Ai actualizat melodia cu success\n";
+            actions.add_state(playlist);
+            if(playlist.UpdateSongByIsmn(ismn))
+                std::cout << "Melodia nu a fost gasita\n";
+            else
+                actions.remove_last_state(), std::cout << "Melodia a fost actualizata\n";
         }
         case 2:
         {
@@ -237,8 +249,11 @@ void menu::AfisareUpdateOptiuni() {
             int imp;
             std::cin >> imp;
             std::cin.ignore();
-            playlist.UpdateSongByIndex(imp)? std::cout << "Melodia nu a fost gasita\n"
-            : std :: cout << "Ai actualizat melodia cu success\n";
+            actions.add_state(playlist);
+            if(playlist.UpdateSongByIndex(imp))
+                std::cout << "Melodia nu a fost gasita\n";
+            else
+                actions.remove_last_state(), std::cout << "Melodia a fost actualizata\n";
         }
     }
 }
@@ -259,6 +274,7 @@ void menu::StartLoop() {
                 DisplayHelpMessage();
                 break;
             case add:
+                actions.add_state(playlist);
                 playlist.append();
                 break;
             case update:
@@ -280,6 +296,12 @@ void menu::StartLoop() {
                 break;
             case listen:
                 AfisareListenOptiuni();
+            case undo:
+                actions.undo(playlist);
+                break;
+            case redo:
+                actions.redo(playlist);
+                break;
             default:
                 break;
         }

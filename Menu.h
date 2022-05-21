@@ -3,14 +3,15 @@
 
 #include "string"
 #include "Playlist.h"
+#include "Actions.h"
 
 //namespace menu {
-//    enum command {NaC,add,del,update,list,search,listen,save,quit,help,clear};
+//    enum command {NaC,add,del,update,list,search,listen,undo,redo,save,quit,help,clear};
 //}
 
 class menu {
 public:
-    enum command {NaC,add,del,update,list,search,listen,save,quit,help,clear,load};
+    enum command {NaC,add,del,update,list,search,listen,undo,redo,save,quit,help,clear,load};
 
     command ParseCommand(std::string cmd);
     command ParseCommand(const char* cmd);
@@ -37,6 +38,7 @@ public:
     void ClearScreen();
 
     Playlist playlist;
+    Actions actions;
 private:
     menu() = default;
 
