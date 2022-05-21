@@ -1,6 +1,6 @@
 #include <cstring>
 #include <iostream>
-#include "menu.h"
+#include "Menu.h"
 
 void menu::ClearScreen() {
 #ifdef WINDOWS

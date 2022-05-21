@@ -2,7 +2,7 @@
 #define MUSIC_LIBRARY_MENU_H
 
 #include "string"
-#include "playlist.h"
+#include "Playlist.h"
 
 //namespace menu {
 //    enum command {NaC,add,del,update,list,search,listen,save,quit,help,clear};

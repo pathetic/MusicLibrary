@@ -1,9 +1,9 @@
 #include <iostream>
 #include "fstream"
-#include "song.h"
-#include "playlist.h"
-#include "json.hpp"
-#include "menu.h"
+#include "Song.h"
+#include "Playlist.h"
+#include "JSON.hpp"
+#include "Menu.h"
 
 #define NUME_DB "db.json"
 
